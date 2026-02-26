@@ -1,0 +1,93 @@
+// _variables.scss — Design tokens as SCSS variables + CSS custom properties
+
+// ── Palette ────────────────────────────────────────────────
+$color-bg:            #fce4ec;
+$color-canvas-bg:     #fde8ee;
+$color-border:        #f48fb1;
+$color-accent:        #f06292;
+$color-accent-hover:  #e91e63;
+$color-accent-light:  #fce4ec;
+
+// ── Text ───────────────────────────────────────────────────
+$color-text:          #5d1a35;
+$color-text-muted:    #9c4468;
+$color-text-light:    #fff9fb;
+
+// ── Modal ──────────────────────────────────────────────────
+$color-modal-overlay: rgba(200, 120, 120, 0.45);
+$color-modal-bg:      #fff0f5;
+$color-modal-border:  #f48fb1;
+
+// ── Gauge ──────────────────────────────────────────────────
+$color-gauge-fill:    #f06292;
+$color-gauge-border:  #f48fb1;
+
+// ── Typography ─────────────────────────────────────────────
+$font-primary:    'Nunito', 'Varela Round', sans-serif;
+$font-size-sm:    12px;
+$font-size-base:  16px;
+$font-size-lg:    18px;
+$font-size-xl:    2rem;
+
+// ── Spacing ────────────────────────────────────────────────
+$space-xs:   0.25rem;
+$space-sm:   0.5rem;
+$space-md:   1rem;
+$space-lg:   1.5rem;
+$space-xl:   2rem;
+$space-2xl:  3rem;
+
+// ── Radius ─────────────────────────────────────────────────
+$radius-sm:   4px;
+$radius-md:   12px;
+$radius-lg:   24px;
+$radius-full: 9999px;
+
+// ── Canvas ─────────────────────────────────────────────────
+$canvas-width:  900px;
+$canvas-height: 500px;
+
+// ── Breakpoints ─────────────────────────────────────────────
+$breakpoint-desktop: 1180px;
+
+// ── CSS custom properties (runtime-accessible by HTML/browser) ──
+:root {
+  --color-bg:            #{$color-bg};
+  --color-canvas-bg:     #{$color-canvas-bg};
+  --color-border:        #{$color-border};
+  --color-accent:        #{$color-accent};
+  --color-accent-hover:  #{$color-accent-hover};
+  --color-accent-light:  #{$color-accent-light};
+
+  --color-text:          #{$color-text};
+  --color-text-muted:    #{$color-text-muted};
+  --color-text-light:    #{$color-text-light};
+
+  --color-modal-overlay: #{$color-modal-overlay};
+  --color-modal-bg:      #{$color-modal-bg};
+  --color-modal-border:  #{$color-modal-border};
+
+  --color-gauge-fill:    #{$color-gauge-fill};
+  --color-gauge-border:  #{$color-gauge-border};
+
+  --font-primary:   #{$font-primary};
+  --font-size-sm:   #{$font-size-sm};
+  --font-size-base: #{$font-size-base};
+  --font-size-lg:   #{$font-size-lg};
+  --font-size-xl:   #{$font-size-xl};
+
+  --space-xs:  #{$space-xs};
+  --space-sm:  #{$space-sm};
+  --space-md:  #{$space-md};
+  --space-lg:  #{$space-lg};
+  --space-xl:  #{$space-xl};
+  --space-2xl: #{$space-2xl};
+
+  --radius-sm:   #{$radius-sm};
+  --radius-md:   #{$radius-md};
+  --radius-lg:   #{$radius-lg};
+  --radius-full: #{$radius-full};
+
+  --canvas-width:  #{$canvas-width};
+  --canvas-height: #{$canvas-height};
+}

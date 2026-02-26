@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 36">
+  <defs>
+    <linearGradient id="ww-g" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%"   stop-color="#e8e2cc"/>
+      <stop offset="100%" stop-color="#c4bc9c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Crumpled irregular body -->
+  <path d="M 6,2 Q 13,1 18,3 Q 23,1 29,3 Q 35,1 38,5
+           Q 39,9 37,14 Q 39,19 35,23 Q 38,28 34,31
+           Q 28,35 22,33 Q 17,35 11,32 Q 7,34 4,31
+           Q 1,26 3,21 Q 1,15 3,10 Q 2,5 6,2 Z"
+        fill="url(#ww-g)" stroke="#9a9278" stroke-width="1.3"/>
+
+  <!-- Bunched fold — top-right -->
+  <path d="M 33,3 Q 39,5 37,13 Q 33,10 32,5 Z"
+        fill="#d8d0b0" stroke="#9a9278" stroke-width="0.9"/>
+
+  <!-- Bunched fold — bottom-left -->
+  <path d="M 5,29 Q 1,34 6,33 Q 9,29 5,29 Z"
+        fill="#d8d0b0" stroke="#9a9278" stroke-width="0.9"/>
+
+  <!-- Main crease lines -->
+  <g stroke="#8a8066" stroke-linecap="round" fill="none">
+    <path d="M 7,8  Q 14,11 20,9  Q 26,7  32,11" stroke-width="1.8" opacity="0.55"/>
+    <path d="M 7,19 Q 14,17 20,21 Q 27,24 34,20" stroke-width="1.5" opacity="0.50"/>
+    <path d="M 14,26 Q 20,24 26,27"              stroke-width="1.2" opacity="0.40"/>
+  </g>
+
+  <!-- Fine wrinkle details -->
+  <g stroke="#9a9278" stroke-linecap="round" fill="none" opacity="0.38">
+    <path d="M 10,11 Q 12,14 10,16"/>
+    <path d="M 30,22 Q 32,25 30,27"/>
+    <path d="M 8,14 Q 10,12 12,14 Q 10,17 8,14"/>
+  </g>
+
+  <!-- Dirty stain spots -->
+  <ellipse cx="14" cy="23" rx="3.5" ry="2.2" fill="rgba(155,135,90,0.28)"/>
+  <circle  cx="28" cy="13" r="2.2"           fill="rgba(155,135,90,0.22)"/>
+  <circle  cx="18" cy="7"  r="1.5"           fill="rgba(155,135,90,0.18)"/>
+
+  <!-- Angry eyebrows (V inward) -->
+  <line x1="16" y1="13" x2="21" y2="15" stroke="#4e4632" stroke-width="2"   stroke-linecap="round"/>
+  <line x1="27" y1="13" x2="22" y2="15" stroke="#4e4632" stroke-width="2"   stroke-linecap="round"/>
+
+  <!-- Squinting eyes -->
+  <rect x="15.5" y="15.5" width="5"   height="2.5" rx="1.2" fill="#4e4632"/>
+  <rect x="22"   y="15.5" width="5"   height="2.5" rx="1.2" fill="#4e4632"/>
+
+  <!-- Grumpy frown -->
+  <path d="M 16,22 Q 19,20 22,22 Q 25,24 27,22"
+        stroke="#4e4632" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+</svg>

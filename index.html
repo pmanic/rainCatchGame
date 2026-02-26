@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>flowMaster</title>
+  <link rel="icon" type="image/svg+xml" href="src/assets/images/favicon.svg" />
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+
+  <!-- ── SVG SPRITE DEFS (hidden) ─────────────────────────── -->
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+       style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="logo-mark" viewBox="0 2 244 44" overflow="visible">
+      <!-- teardrop accent -->
+      <path d="M16,4 C9,14 0,22 0,30 a16,16,0,0,0,32,0 C32,22 23,14 16,4Z"
+            fill="#f06292"/>
+      <!-- logotype -->
+      <text x="42" y="25" dominant-baseline="central" font-family="Nunito,'Varela Round',sans-serif" font-size="36">
+        <tspan font-weight="700" fill="#f06292">flow</tspan><tspan font-weight="900" fill="#e91e63">Master</tspan>
+      </text>
+    </symbol>
+  </svg>
+
+  <!-- ── START SCREEN ─────────────────────────────────────── -->
+  <div id="start-screen" role="main" aria-label="Start screen">
+    <!-- Reuse game background SVG -->
+    <div class="start-bg" aria-hidden="true"></div>
+
+    <!-- Floating bubbles -->
+    <div class="bubble" style="--s:70px;  --x:8%;  --y:18%; --d:0s;   --t:5.5s;"></div>
+    <div class="bubble" style="--s:40px;  --x:17%; --y:65%; --d:1.2s; --t:7s;"></div>
+    <div class="bubble" style="--s:90px;  --x:30%; --y:38%; --d:0.5s; --t:6s;"></div>
+    <div class="bubble" style="--s:55px;  --x:45%; --y:72%; --d:2s;   --t:8s;"></div>
+    <div class="bubble" style="--s:35px;  --x:60%; --y:12%; --d:0.8s; --t:5s;"></div>
+    <div class="bubble" style="--s:80px;  --x:70%; --y:55%; --d:1.6s; --t:7.5s;"></div>
+    <div class="bubble" style="--s:48px;  --x:82%; --y:28%; --d:0.3s; --t:6.5s;"></div>
+    <div class="bubble" style="--s:65px;  --x:88%; --y:70%; --d:2.5s; --t:5s;"></div>
+    <div class="bubble" style="--s:30px;  --x:52%; --y:48%; --d:1s;   --t:8.5s;"></div>
+    <div class="bubble" style="--s:52px;  --x:24%; --y:82%; --d:3s;   --t:6s;"></div>
+
+    <!-- Logo + Start button -->
+    <div class="start-content">
+      <svg class="start-logo logo-svg" role="img" aria-label="flowMaster" viewBox="0 2 244 44"><use href="#logo-mark"/></svg>
+      <button id="start-btn" class="btn-start" autofocus>Start</button>
+    </div>
+  </div>
+
+  <!-- Full-page liquid fill — rises from bottom as gauge fills -->
+  <div id="page-fill" aria-hidden="true"></div>
+
+  <div class="page-wrapper">
+    <div class="game-layout">
+
+      <!-- ── LEFT: Game canvas ──────────────────────── -->
+      <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Score overlay — top-left, mobile only -->
+        <div id="mobile-hud" aria-hidden="true">
+          <span class="mobile-hud-label">Score</span>
+          <span id="mobile-score">0</span>
+        </div>
+
+        <!-- Misses overlay — top-right, mobile only -->
+        <div id="mobile-misses" aria-hidden="true">
+          <img class="mobile-miss-drop" data-mobile-index="0" src="src/assets/sprites/blood-drop.svg" alt="" />
+          <img class="mobile-miss-drop" data-mobile-index="1" src="src/assets/sprites/blood-drop.svg" alt="" />
+          <img class="mobile-miss-drop" data-mobile-index="2" src="src/assets/sprites/blood-drop.svg" alt="" />
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Stats sidebar ───────────────────── -->
+      <aside id="game-sidebar" aria-label="Game stats">
+
+        <svg class="sidebar-brand logo-svg" role="img" aria-label="flowMaster" viewBox="0 2 244 44"><use href="#logo-mark"/></svg>
+
+        <!-- Score -->
+        <div class="sidebar-card">
+          <div class="sidebar-label">Score</div>
+          <div class="sidebar-big" id="score-display">0</div>
+        </div>
+
+        <!-- Pad level -->
+        <div class="sidebar-card">
+          <div class="sidebar-label">Pad Level</div>
+          <div class="sidebar-level-name" id="level-name">Maxi</div>
+          <div id="level-bars" aria-label="Level progress">
+            <div class="level-bar" data-level="0">
+              <span class="level-bar-fill"></span>
+              <span class="level-bar-tag">Maxi</span>
+            </div>
+            <div class="level-bar" data-level="1">
+              <span class="level-bar-fill"></span>
+              <span class="level-bar-tag">Normal</span>
+            </div>
+            <div class="level-bar" data-level="2">
+              <span class="level-bar-fill"></span>
+              <span class="level-bar-tag">Slim</span>
+            </div>
+            <div class="level-bar" data-level="3">
+              <span class="level-bar-fill"></span>
+              <span class="level-bar-tag">Mini</span>
+            </div>
+          </div>
+          <!-- Fill progress under the level bars -->
+          <div class="sidebar-fill-numbers" id="gauge-numbers">Fill: 0 / 12</div>
+        </div>
+
+        <!-- Misses -->
+        <div class="sidebar-card">
+          <div class="sidebar-label">Misses</div>
+          <div id="misses-display" aria-label="Remaining lives">
+            <img class="miss-drop" data-index="0"
+              src="src/assets/sprites/blood-drop.svg" alt="Life 1" />
+            <img class="miss-drop" data-index="1"
+              src="src/assets/sprites/blood-drop.svg" alt="Life 2" />
+            <img class="miss-drop" data-index="2"
+              src="src/assets/sprites/blood-drop.svg" alt="Life 3" />
+          </div>
+        </div>
+
+        <!-- Controls hint -->
+        <div class="sidebar-card sidebar-controls">
+          <div class="sidebar-label">Controls</div>
+          <p class="controls-line">← → &nbsp; A / D</p>
+          <p class="controls-line">Mouse / Touch</p>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- Game Over modal — full-page overlay -->
+  <div
+    id="gameover-modal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal-content">
+      <h2 id="modal-title">Game Over!</h2>
+      <p>Score: <span id="modal-score">0</span></p>
+      <p>Best pad level: <span id="modal-level">Maxi</span></p>
+      <hr class="modal-divider" />
+      <button id="restart-btn" class="btn-restart" autofocus>Play Again</button>
+    </div>
+  </div>
+
+  <script type="module" src="src/logic/main.js"></script>
+</body>
+</html>

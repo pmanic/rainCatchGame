@@ -1,0 +1,44 @@
+// _base.scss — Reset, font import, global element styles
+@use 'variables' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+
+  // Mesh gradient: 4 soft radial blobs over a base gradient
+  background-color: $color-bg;
+  background-image:
+    radial-gradient(ellipse 75% 60% at  5%  5%, rgba(248, 187, 208, 0.90) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 65% at 95% 95%, rgba(209, 196, 233, 0.85) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 95%  5%, rgba(179, 229, 252, 0.60) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 55% at  5% 95%, rgba(255, 205, 210, 0.70) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 45% at 50% 50%, rgba(243, 229, 245, 0.50) 0%, transparent 65%),
+    linear-gradient(145deg, #fce4ec 0%, #ede7f6 100%);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+
+  color: $color-text;
+  font-family: $font-primary;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}

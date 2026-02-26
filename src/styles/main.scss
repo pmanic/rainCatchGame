@@ -1,0 +1,6 @@
+// main.scss — Entry point; imports all partials in dependency order
+
+@use 'variables';
+@use 'base';
+@use 'layout';
+@use 'components';
