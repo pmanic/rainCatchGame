@@ -1,20 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap");
 :root {
-  --color-bg: #fce4ec;
-  --color-canvas-bg: #fde8ee;
-  --color-border: #f48fb1;
-  --color-accent: #f06292;
-  --color-accent-hover: #e91e63;
-  --color-accent-light: #fce4ec;
-  --color-text: #5d1a35;
-  --color-text-muted: #9c4468;
-  --color-text-light: #fff9fb;
-  --color-modal-overlay: rgba(200, 120, 120, 0.45);
-  --color-modal-bg: #fff0f5;
-  --color-modal-border: #f48fb1;
-  --color-gauge-fill: #f06292;
-  --color-gauge-border: #f48fb1;
-  --font-primary: Nunito, Varela Round, sans-serif;
+  --color-bg: #dff3ff;
+  --color-canvas-bg: #edf9ff;
+  --color-border: #66a9df;
+  --color-accent: #2b84d8;
+  --color-accent-hover: #0d5ea8;
+  --color-accent-light: #e8f6ff;
+  --color-text: #16314e;
+  --color-text-muted: #55708d;
+  --color-text-light: #f7fcff;
+  --color-modal-overlay: rgba(18, 58, 102, 0.35);
+  --color-modal-bg: #f4fbff;
+  --color-modal-border: #66a9df;
+  --color-gauge-fill: #53a9ff;
+  --color-gauge-border: #66a9df;
+  --font-primary: Fredoka, Trebuchet MS, sans-serif;
   --font-size-sm: 12px;
   --font-size-base: 16px;
   --font-size-lg: 18px;
@@ -29,8 +29,8 @@
   --radius-md: 12px;
   --radius-lg: 24px;
   --radius-full: 9999px;
-  --canvas-width: 900px;
-  --canvas-height: 500px;
+  --canvas-width: 1120px;
+  --canvas-height: 640px;
 }
 
 *,
@@ -47,12 +47,12 @@ html {
 
 body {
   min-height: 100%;
-  background-color: #fce4ec;
-  background-image: radial-gradient(ellipse 75% 60% at 5% 5%, rgba(248, 187, 208, 0.9) 0%, transparent 55%), radial-gradient(ellipse 65% 65% at 95% 95%, rgba(209, 196, 233, 0.85) 0%, transparent 55%), radial-gradient(ellipse 55% 50% at 95% 5%, rgba(179, 229, 252, 0.6) 0%, transparent 50%), radial-gradient(ellipse 60% 55% at 5% 95%, rgba(255, 205, 210, 0.7) 0%, transparent 50%), radial-gradient(ellipse 50% 45% at 50% 50%, rgba(243, 229, 245, 0.5) 0%, transparent 65%), linear-gradient(145deg, #fce4ec 0%, #ede7f6 100%);
+  background-color: #dff3ff;
+  background-image: radial-gradient(ellipse 78% 62% at 10% 12%, rgba(199, 235, 255, 0.95) 0%, transparent 55%), radial-gradient(ellipse 70% 70% at 92% 96%, rgba(163, 214, 255, 0.88) 0%, transparent 58%), radial-gradient(ellipse 58% 52% at 92% 8%, rgba(255, 224, 130, 0.42) 0%, transparent 48%), radial-gradient(ellipse 62% 58% at 6% 94%, rgba(189, 234, 207, 0.48) 0%, transparent 50%), radial-gradient(ellipse 48% 40% at 48% 45%, rgba(255, 255, 255, 0.52) 0%, transparent 62%), linear-gradient(160deg, #dff3ff 0%, #b5dcff 52%, #eef9ff 100%);
   background-attachment: fixed;
   background-size: 100% 100%;
-  color: #5d1a35;
-  font-family: "Nunito", "Varela Round", sans-serif;
+  color: #16314e;
+  font-family: "DM Sans", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -103,17 +103,17 @@ button {
 
 #game-canvas {
   display: block;
-  width: 95vw;
-  height: 95vh;
-  background: #fde8ee;
-  border: 2px solid #f48fb1;
+  width: 98vw;
+  height: 98vh;
+  background: #edf9ff;
+  border: 2px solid #66a9df;
   border-radius: 4px;
   cursor: none;
 }
 @media (min-width: 1180px) {
   #game-canvas {
-    width: 900px;
-    height: 500px;
+    width: 1120px;
+    height: 640px;
     border-width: 3px;
     border-radius: 12px;
   }
@@ -127,17 +127,17 @@ button {
   height: 0%;
   z-index: 0;
   pointer-events: none;
-  background: rgb(218, 152, 152);
+  background: rgba(83, 169, 255, 0.42);
   transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
 #page-fill::before {
   content: "";
   position: absolute;
-  top: -50px;
+  top: -60px;
   left: -5%;
   width: 110%;
   height: 60px;
-  background: rgb(218, 152, 152);
+  background: rgba(83, 169, 255, 0.42);
   animation: pageWave 3.6s ease-in-out infinite;
 }
 
@@ -164,7 +164,7 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 1px;
-  background: rgba(255, 245, 250, 0.88);
+  background: rgba(244, 251, 255, 0.9);
   backdrop-filter: blur(6px);
   border-radius: 4px;
   padding: 5px 12px 7px;
@@ -176,12 +176,12 @@ button {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: #9c4468;
+  color: #55708d;
 }
 #mobile-hud #mobile-score {
   font-size: 1.6rem;
   font-weight: 900;
-  color: #f06292;
+  color: #0d5ea8;
 }
 @media (min-width: 1180px) {
   #mobile-hud {
@@ -200,8 +200,8 @@ button {
   pointer-events: none;
 }
 #mobile-misses .mobile-miss-drop {
-  width: 18px;
-  height: 21px;
+  width: 24px;
+  height: 20px;
   object-fit: contain;
   opacity: 0.2;
   filter: grayscale(1) brightness(0.7);
@@ -233,13 +233,13 @@ button {
 @media (min-width: 1180px) {
   .sidebar-brand {
     display: block;
-    width: 150px;
+    width: 160px;
     height: auto;
     margin: 4px auto 2px;
   }
   .sidebar-card {
-    background: rgba(255, 245, 250, 0.92);
-    border: 1.5px solid #fad7e8;
+    background: rgba(244, 251, 255, 0.92);
+    border: 1.5px solid #c7e3f7;
     border-radius: 12px;
     padding: 12px 16px;
   }
@@ -248,25 +248,25 @@ button {
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #9c4468;
+    color: #55708d;
     margin-bottom: 6px;
   }
   .sidebar-big {
     font-size: 2.6rem;
     font-weight: 900;
-    color: #5d1a35;
+    color: #16314e;
     line-height: 1;
   }
   .sidebar-level-name {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #f06292;
+    color: #2b84d8;
     margin-bottom: 10px;
   }
   .sidebar-fill-numbers {
     font-size: 11px;
     font-weight: 700;
-    color: #9c4468;
+    color: #55708d;
     margin-top: 8px;
   }
   #level-bars {
@@ -283,14 +283,14 @@ button {
     display: block;
     height: 8px;
     border-radius: 4px;
-    background: rgba(240, 100, 160, 0.15);
-    border: 1.5px solid rgba(240, 100, 160, 0.2);
+    background: rgba(83, 169, 255, 0.14);
+    border: 1.5px solid rgba(83, 169, 255, 0.22);
     transition: background 0.3s ease, border-color 0.3s ease;
   }
   .level-bar-tag {
     font-size: 10px;
     font-weight: 700;
-    color: #9c4468;
+    color: #55708d;
     white-space: nowrap;
   }
   .level-bar[data-level="0"] .level-bar-fill {
@@ -306,15 +306,15 @@ button {
     width: 39%;
   }
   .level-bar.active .level-bar-fill {
-    background: #f06292;
-    border-color: #e91e63;
+    background: #2b84d8;
+    border-color: #0d5ea8;
   }
   .level-bar.active .level-bar-tag {
-    color: #e91e63;
+    color: #0d5ea8;
   }
   .level-bar.passed .level-bar-fill {
-    background: rgba(240, 100, 160, 0.35);
-    border-color: rgba(240, 100, 160, 0.4);
+    background: rgba(83, 169, 255, 0.35);
+    border-color: rgba(83, 169, 255, 0.45);
   }
   #misses-display {
     display: flex;
@@ -322,8 +322,8 @@ button {
     align-items: center;
   }
   .miss-drop {
-    width: 24px;
-    height: 28px;
+    width: 30px;
+    height: 24px;
     object-fit: contain;
     opacity: 0.18;
     filter: grayscale(1) brightness(0.7);
@@ -340,7 +340,7 @@ button {
   .controls-line {
     font-size: 12px;
     font-weight: 700;
-    color: #9c4468;
+    color: #55708d;
     line-height: 1.8;
   }
 }
@@ -373,7 +373,7 @@ button {
   height: 100%;
   object-fit: cover;
   pointer-events: none;
-  background-color: #fce4ec;
+  background-color: #dff3ff;
 }
 
 .bubble {
@@ -383,7 +383,7 @@ button {
   width: var(--s, 50px);
   height: var(--s, 50px);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.65), rgba(240, 98, 146, 0.18));
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.7), rgba(78, 165, 255, 0.2));
   border: 1.5px solid rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(3px);
   animation: bubbleFloat var(--t, 6s) ease-in-out var(--d, 0s) infinite;
@@ -408,20 +408,57 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 1rem;
   padding: 10vh 0 12vh;
 }
 
 .start-logo {
   display: block;
-  width: 75vw;
+  width: 80vw;
   height: auto;
   user-select: none;
 }
 @media (min-width: 1180px) {
   .start-logo {
-    width: clamp(200px, 35vw, 400px);
+    width: clamp(220px, 38vw, 430px);
   }
+}
+
+.start-tagline {
+  max-width: 420px;
+  padding: 0 1rem;
+  text-align: center;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #16314e;
+  text-transform: uppercase;
+}
+
+.name-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: min(320px, 82vw);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #16314e;
+}
+.name-input-group input {
+  padding: 0.8rem 1rem;
+  border: 2px solid #b8daf5;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #16314e;
+  font: inherit;
+  text-align: center;
+}
+.name-input-group input:focus {
+  outline: 3px solid rgba(43, 132, 216, 0.25);
+  border-color: #2b84d8;
 }
 
 .btn-start {
@@ -430,7 +467,7 @@ button {
   font-size: 1.25rem;
   font-weight: 900;
   letter-spacing: 0.06em;
-  background: linear-gradient(135deg, #f06292 0%, #e91e63 100%);
+  background: linear-gradient(135deg, #2b84d8 0%, #0d5ea8 100%);
   color: #fff;
   border-radius: 9999px;
   animation: softPulse 2s ease-in-out infinite;
@@ -438,10 +475,10 @@ button {
 }
 .btn-start:hover {
   animation: jiggle 0.55s ease, softPulse 2s ease-in-out infinite;
-  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  background: linear-gradient(135deg, #0d5ea8 0%, #0a467d 100%);
 }
 .btn-start:focus-visible {
-  outline: 3px solid #f06292;
+  outline: 3px solid #2b84d8;
   outline-offset: 3px;
 }
 .btn-start:active {
@@ -484,10 +521,10 @@ button {
 }
 @keyframes softPulse {
   0%, 100% {
-    box-shadow: 0 4px 18px rgba(240, 98, 146, 0.45);
+    box-shadow: 0 4px 18px rgba(43, 132, 216, 0.42);
   }
   50% {
-    box-shadow: 0 4px 28px rgba(240, 98, 146, 0.75);
+    box-shadow: 0 4px 28px rgba(43, 132, 216, 0.72);
   }
 }
 .modal {
@@ -496,7 +533,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(200, 120, 120, 0.45);
+  background: rgba(18, 58, 102, 0.35);
   backdrop-filter: blur(4px);
   z-index: 30;
 }
@@ -509,12 +546,13 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 0.55rem;
-  background: #fff0f5;
-  border: 2.5px solid #f48fb1;
+  background: #f4fbff;
+  border: 2.5px solid #66a9df;
   border-radius: 24px;
   padding: 1.6rem 2.2rem;
   text-align: center;
   width: 85vw;
+  animation: bounceIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 @media (min-width: 1180px) {
   .modal-content {
@@ -522,32 +560,30 @@ button {
     min-width: 300px;
   }
 }
-.modal-content {
-  animation: bounceIn 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
 .modal-content h2 {
   font-size: 2rem;
   font-weight: 900;
   line-height: 1.2;
-  color: #f06292;
+  color: #2b84d8;
   letter-spacing: 0.03em;
   margin-bottom: 0.4rem;
+  font-family: "Fredoka", "Trebuchet MS", sans-serif;
 }
 .modal-content p {
   font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.4;
-  color: #9c4468;
+  color: #55708d;
   margin: 0;
 }
 .modal-content p span {
-  color: #5d1a35;
+  color: #16314e;
 }
 
 .modal-divider {
   width: 100%;
   border: none;
-  border-top: 1.5px dashed #f8bbd0;
+  border-top: 1.5px dashed #c7e3f7;
   margin: 0.3rem 0;
 }
 
@@ -558,7 +594,7 @@ button {
   font-size: 1.05rem;
   font-weight: 900;
   letter-spacing: 0.05em;
-  background: linear-gradient(135deg, #f06292 0%, #e91e63 100%);
+  background: linear-gradient(135deg, #2b84d8 0%, #0d5ea8 100%);
   color: #fff;
   border-radius: 9999px;
   animation: softPulse 2s ease-in-out infinite;
@@ -566,10 +602,10 @@ button {
 }
 .btn-restart:hover {
   animation: jiggle 0.55s ease, softPulse 2s ease-in-out infinite;
-  background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+  background: linear-gradient(135deg, #0d5ea8 0%, #0a467d 100%);
 }
 .btn-restart:focus-visible {
-  outline: 3px solid #f06292;
+  outline: 3px solid #2b84d8;
   outline-offset: 3px;
 }
 .btn-restart:active {

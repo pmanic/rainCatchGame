@@ -1,39 +1,61 @@
-# flowMaster
+# rainCatcher
 
-A browser-based arcade game. Catch falling blood drops with your pad, dodge wet wipes, and grab water droplets to restore lives — all while your pad shrinks as it fills up.
+Jednostavna ECS igrica u JavaScript-u. Igrac pomera kantu i hvata kapi kise, izbegava blato i skuplja zlatne kapi za povratak zivota.
 
----
+## Sta projekat pokazuje
 
-## Gameplay
+- ECS engine napravljen u JavaScript-u
+- Funkcionalni stil: nema mutacije sveta, sistemi vracaju novi `world`
+- Kompozicija sistema preko `runSystems(...)`
+- Upotreba `map`, `filter` i `reduce`
+- Obavezni sistemi sa zadatka i jos nekoliko dodatnih sistema za samu igricu
 
-Use your pad to catch items falling from the top of the screen:
+## Sistemi u projektu
 
-| Item | Effect |
-|---|---|
-| 🩸 Blood drop | +1 score, fills the pad gauge |
-| 🧻 Wet wipe | −1 score, drains gauge |
-| 💧 Water drop | Restores 1 missed life |
+- `inputSystem`:
+  tastatura, mis, touch i tekstualni unos imena igraca
+- `renderSystem`:
+  iscrtavanje pozadine, objekata i kante
+- `playerSystem`:
+  pomeranje igraca
+- `spawnSystem`:
+  kreiranje novih objekata
+- `physicsSystem`:
+  padanje objekata
+- `collisionSystem`:
+  detekcija sudara
+- `cleanupSystem`:
+  uklanjanje objekata koji su ispali sa ekrana
+- `progressionSystem`:
+  skor, zivoti, nivo kante i kraj igre
 
-**Pad levels** — as your gauge fills, the pad shrinks: Maxi → Normal → Slim → Mini.
-Miss 3 blood drops or drain your score to zero and it's game over.
+## Funkcionalni principi
 
-## Controls
+- Imutabilnost:
+  svaka promena vraca novi objekat sveta ili novu mapu komponenti
+- Funkcije viseg reda:
+  `inputSystem(rawInput)` vraca sistem, `reduce` pokrece listu sistema
+- Kompozicija funkcija:
+  svi sistemi se izvrsavaju redom u jednoj petlji
+- `filter`:
+  biranje entiteta koji imaju trazene komponente
+- `reduce`:
+  pomeranje vise entiteta, obrada dogadjaja i pokretanje svih sistema
 
-| Input | Action |
-|---|---|
-| `← →` or `A / D` | Move pad |
-| Mouse | Pad follows cursor |
-| Touch / drag | Mobile support |
+## Pravila igre
 
-## Running locally
+- Kisna kap: `+1` poen i puni vodostaj
+- Blatnjava kap: `-1` poen i smanjuje vodostaj
+- Zlatna kap: vraca jedan izgubljeni oblak
+- Kada se kanta napuni, prelazi u manju velicinu:
+  Barrel -> Bucket -> Pail -> Tin
+- Ako promasis 3 kisne kapi ili skor padne na 0, igra se zavrsava
+
+## Pokretanje
 
 ```bash
-npm install        # first time only (installs sass)
-npm run build:css  # compile SCSS → CSS
+npm install
+npm run build:css
 ```
 
-Then open `index.html` directly in a browser. No server needed.
-
-## Stack
-
-Vanilla JavaScript — no frameworks, no bundler. Built with an Entity-Component-System (ECS) architecture and functional programming principles. Styles authored in SCSS.
+Posle toga otvoriti `index.html` u browser-u.

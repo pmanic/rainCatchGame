@@ -1,106 +1,134 @@
-// progressionSystem.js — Processes frame events to update score, gauge, pad level, and game-over.
-
-import { query }                   from '../ecs/query.js';
-import { updateComponent }         from '../ecs/world.js';
-import { updateGame, clamp }       from '../ecs/helpers.js';
-
-/** Duration in seconds of the pad shake effect triggered by catching a wet wipe. */
-const PAD_SHAKE_DURATION = 0.4;
+import { clamp, updateGame } from '../ecs/helpers.js';
+import { updateComponent } from '../ecs/world.js';
 
 /**
- * Applies the effect of a single 'collected' event to the world.
+ * Finds the player entity id.
  *
  * @param {import('../ecs/world.js').World} world
- * @param {{ type: string, tag: import('../ecs/world.js').EntityTag }} event
- * @param {object} config - Game config from world resources.
- * @returns {import('../ecs/world.js').World}
+ * @returns {number|null}
  */
-function applyCollectedEvent(world, event, config) {
-  const game = world.resources.game;
+function findPlayerId(world) {
+    for (const [entityId, tag] of world.components.Tag.entries()) {
+        if (tag === 'player') {
+            return entityId;
+        }
+    }
 
-  if (event.tag === 'blood') {
-    return updateGame(world, { score: game.score + 1, gauge: game.gauge + 1 });
-  }
-
-  if (event.tag === 'wetWipe') {
-    const penalisedScore = Math.max(0, game.score - 1);
-    const penalisedGauge = Math.max(0, game.gauge - 2);
-    const nextStatus     = (game.score > 0 && penalisedScore === 0) ? 'gameover' : game.status;
-    return updateGame(world, {
-      score:    penalisedScore,
-      gauge:    penalisedGauge,
-      status:   nextStatus,
-      padShake: PAD_SHAKE_DURATION,
-    });
-  }
-
-  if (event.tag === 'water') {
-    // Restore one missed life, floored at 0.
-    const restoredMissCount = clamp(0, config.maxMisses)(game.missedDrops - 1);
-    return updateGame(world, { missedDrops: restoredMissCount });
-  }
-
-  return world;
+    return null;
 }
 
 /**
- * Processes all events from the current frame, then checks for game-over and
- * pad level advancement. Clears the events array before returning.
+ * Applies the gameplay effect of one collected item.
  *
  * @param {import('../ecs/world.js').World} world
- * @param {number} dt - Delta time in seconds.
+ * @param {import('../ecs/world.js').EntityTag} tag
+ * @param {object} config
  * @returns {import('../ecs/world.js').World}
  */
-export function progressionSystem(world, dt) {
-  const { game, config } = world.resources;
+function applyCollectedItem(world, tag, config) {
+    const game = world.resources.game;
 
-  // Tick down the pad shake timer
-  world = game.padShake > 0
-    ? updateGame(world, { padShake: Math.max(0, game.padShake - dt) })
-    : world;
-
-  // Apply every collected-item event accumulated this frame
-  const worldAfterEvents = world.events.reduce((accWorld, event) => {
-    if (event.type === 'collected') {
-      return applyCollectedEvent(accWorld, event, config);
-    }
-    return accWorld;
-  }, world);
-
-  // Clear the event queue for the next frame
-  let clearedWorld = { ...worldAfterEvents, events: [] };
-  const currentGame = clearedWorld.resources.game;
-
-  // Check game-over: all lives exhausted
-  if (currentGame.missedDrops >= config.maxMisses) {
-    return updateGame(clearedWorld, { status: 'gameover' });
-  }
-
-  // Check pad level advancement: gauge filled
-  const currentLevelData = config.padLevels[currentGame.padLevel];
-  if (currentGame.gauge >= currentLevelData.capacity) {
-    const nextLevelIndex = Math.min(currentGame.padLevel + 1, config.padLevels.length - 1);
-    const newBestLevel   = Math.max(currentGame.bestLevel, nextLevelIndex);
-    const levelAdvanced  = nextLevelIndex !== currentGame.padLevel;
-
-    if (levelAdvanced) {
-      const [playerId] = query(clearedWorld, 'Tag').filter(
-        entityId => clearedWorld.components.Tag.get(entityId) === 'player'
-      );
-      if (playerId != null) {
-        clearedWorld = updateComponent(
-          clearedWorld, 'Size', playerId,
-          { w: config.padLevels[nextLevelIndex].width }
-        );
-      }
+    if (tag === 'rain') {
+        return updateGame(world, {
+            score: game.score + 1,
+            gauge: game.gauge + 1,
+        });
     }
 
-    return updateGame(clearedWorld, {
-      padLevel:  nextLevelIndex,
-      bestLevel: newBestLevel,
-      gauge:     levelAdvanced ? 0 : currentGame.gauge,
+    if (tag === 'mud') {
+        const nextScore = Math.max(0, game.score - 1);
+        const nextGauge = Math.max(0, game.gauge - 2);
+
+        return updateGame(world, {
+            score: nextScore,
+            gauge: nextGauge,
+            status: game.score > 0 && nextScore === 0 ? 'gameover' : game.status,
+        });
+    }
+
+    if (tag === 'golden') {
+        return updateGame(world, {
+            missedDrops: clamp(0, config.maxMisses, game.missedDrops - 1),
+        });
+    }
+
+    return world;
+}
+
+/**
+ * Processes all queued events for the current frame and clears the event list.
+ *
+ * @param {import('../ecs/world.js').World} world
+ * @param {object} config
+ * @returns {import('../ecs/world.js').World}
+ */
+function applyEvents(world, config) {
+    const worldAfterEvents = world.events.reduce((currentWorld, event) => {
+        if (event.type !== 'collected') {
+            return currentWorld;
+        }
+
+        return applyCollectedItem(currentWorld, event.tag, config);
+    }, world);
+
+    return {
+        ...worldAfterEvents,
+        events: [],
+    };
+}
+
+/**
+ * Changes the player bucket width when the level advances.
+ *
+ * @param {import('../ecs/world.js').World} world
+ * @param {number} nextLevelIndex
+ * @param {object} config
+ * @returns {import('../ecs/world.js').World}
+ */
+function updateBucketSize(world, nextLevelIndex, config) {
+    const playerId = findPlayerId(world);
+
+    if (playerId == null) {
+        return world;
+    }
+
+    return updateComponent(world, 'Size', playerId, {
+        w: config.bucketLevels[nextLevelIndex].width,
     });
-  }
+}
 
-  return clearedWorld;
+/**
+ * Updates score, misses, bucket size, and game-over state.
+ *
+ * @param {import('../ecs/world.js').World} world
+ * @param {number} _dt
+ * @returns {import('../ecs/world.js').World}
+ */
+export function progressionSystem(world, _dt) {
+    const { config } = world.resources;
+    world = applyEvents(world, config);
+
+    const currentGame = world.resources.game;
+    if (currentGame.missedDrops >= config.maxMisses) {
+        return updateGame(world, { status: 'gameover' });
+    }
+
+    const currentLevel = config.bucketLevels[currentGame.bucketLevel];
+    if (currentGame.gauge < currentLevel.capacity) {
+        return world;
+    }
+
+    const nextLevelIndex = Math.min(currentGame.bucketLevel + 1, config.bucketLevels.length - 1);
+    const levelChanged = nextLevelIndex !== currentGame.bucketLevel;
+    const nextBestLevel = Math.max(currentGame.bestLevel, nextLevelIndex);
+
+    if (levelChanged) {
+        world = updateBucketSize(world, nextLevelIndex, config);
+    }
+
+    return updateGame(world, {
+        bucketLevel: nextLevelIndex,
+        bestLevel: nextBestLevel,
+        gauge: levelChanged ? 0 : currentGame.gauge,
+    });
 }

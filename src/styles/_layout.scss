@@ -1,322 +1,300 @@
-// _layout.scss — Page layout, panels, page-fill
-// Mobile-first: default styles = mobile.
-// @media (min-width: $breakpoint-desktop) = desktop overrides.
 @use 'variables' as *;
 
-$fill-color: rgb(218, 152, 152);
+$fill-color: rgba(83, 169, 255, 0.42);
 
-// ══════════════════════════════════════════════════════════
-//   CORE LAYOUT
-// ══════════════════════════════════════════════════════════
-
-// ── Full-viewport centred wrapper ──────────────────────────
 .page-wrapper {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100svh;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
 
-  @media (min-width: $breakpoint-desktop) {
-    min-height: 100vh;
-    padding: 24px 16px;
-  }
+    @media (min-width: $breakpoint-desktop) {
+        min-height: 100vh;
+        padding: 24px 16px;
+    }
 }
 
-// ── Flex row — single column on mobile, two-panel on desktop
 .game-layout {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  min-height: 100svh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
 
-  @media (min-width: $breakpoint-desktop) {
-    align-items: stretch;
-    justify-content: flex-start;
-    min-height: auto;
-    gap: 20px;
-  }
+    @media (min-width: $breakpoint-desktop) {
+        align-items: stretch;
+        justify-content: flex-start;
+        min-height: auto;
+        gap: 20px;
+    }
 }
 
-// ── Canvas container ────────────────────────────────────────
 #game-container {
-  position: relative;
-  flex-shrink: 0;
-  line-height: 0;
+    position: relative;
+    flex-shrink: 0;
+    line-height: 0;
 }
 
-// ── Canvas — 95% of viewport on mobile; fixed 900×500 on desktop
 #game-canvas {
-  display: block;
-  width: 95vw;
-  height: 95vh;
-  background: $color-canvas-bg;
-  border: 2px solid $color-border;
-  border-radius: $radius-sm;
-  cursor: none;
+    display: block;
+    width: 98vw;
+    height: 98vh;
+    background: $color-canvas-bg;
+    border: 2px solid $color-border;
+    border-radius: $radius-sm;
+    cursor: none;
 
-  @media (min-width: $breakpoint-desktop) {
-    width: $canvas-width;
-    height: $canvas-height;
-    border-width: 3px;
-    border-radius: $radius-md;
-  }
+    @media (min-width: $breakpoint-desktop) {
+        width: $canvas-width;
+        height: $canvas-height;
+        border-width: 3px;
+        border-radius: $radius-md;
+    }
 }
-
-// ══════════════════════════════════════════════════════════
-//   PAGE-FILL — liquid rising behind everything
-// ══════════════════════════════════════════════════════════
 
 #page-fill {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 0%;
-  z-index: 0;
-  pointer-events: none;
-  background: $fill-color;
-  transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50px;
-    left: -5%;
-    width: 110%;
-    height: 60px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0%;
+    z-index: 0;
+    pointer-events: none;
     background: $fill-color;
-    animation: pageWave 3.6s ease-in-out infinite;
-  }
+    transition: height 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        left: -5%;
+        width: 110%;
+        height: 60px;
+        background: $fill-color;
+        animation: pageWave 3.6s ease-in-out infinite;
+    }
 }
 
 @keyframes pageWave {
-  0%, 100% {
-    border-radius: 36% 64% 0 0 / 68% 32% 0 0;
-    transform: translateX(0%);
-  }
-  33% {
-    border-radius: 58% 42% 0 0 / 32% 68% 0 0;
-    transform: translateX(-2%);
-  }
-  66% {
-    border-radius: 64% 36% 0 0 / 55% 45% 0 0;
-    transform: translateX(2%);
-  }
+    0%, 100% {
+        border-radius: 36% 64% 0 0 / 68% 32% 0 0;
+        transform: translateX(0%);
+    }
+    33% {
+        border-radius: 58% 42% 0 0 / 32% 68% 0 0;
+        transform: translateX(-2%);
+    }
+    66% {
+        border-radius: 64% 36% 0 0 / 55% 45% 0 0;
+        transform: translateX(2%);
+    }
 }
-
-// ══════════════════════════════════════════════════════════
-//   MOBILE HUD — score overlay (hidden on desktop)
-// ══════════════════════════════════════════════════════════
 
 #mobile-hud {
-  display: flex;
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  z-index: 5;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1px;
-  background: rgba(255, 245, 250, 0.88);
-  backdrop-filter: blur(6px);
-  border-radius: $radius-sm;
-  padding: 5px 12px 7px;
-  pointer-events: none;
-  line-height: 1;
+    display: flex;
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    z-index: 5;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    background: rgba(244, 251, 255, 0.9);
+    backdrop-filter: blur(6px);
+    border-radius: $radius-sm;
+    padding: 5px 12px 7px;
+    pointer-events: none;
+    line-height: 1;
 
-  .mobile-hud-label {
-    font-size: 9px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: $color-text-muted;
-  }
-
-  #mobile-score {
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: $color-accent;
-  }
-
-  @media (min-width: $breakpoint-desktop) {
-    display: none;
-  }
-}
-
-// ── Mobile misses (top-right, hidden on desktop) ────────────
-#mobile-misses {
-  display: flex;
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  z-index: 5;
-  gap: 6px;
-  align-items: center;
-  pointer-events: none;
-
-  .mobile-miss-drop {
-    width: 18px;
-    height: 21px;
-    object-fit: contain;
-    opacity: 0.2;
-    filter: grayscale(1) brightness(0.7);
-    transition: opacity 0.3s ease, filter 0.3s ease;
-
-    &.filled {
-      opacity: 1;
-      filter: none;
+    .mobile-hud-label {
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $color-text-muted;
     }
-  }
 
-  @media (min-width: $breakpoint-desktop) {
-    display: none;
-  }
+    #mobile-score {
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: $color-accent-hover;
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        display: none;
+    }
 }
 
-// ══════════════════════════════════════════════════════════
-//   SIDEBAR — hidden on mobile, visible on desktop
-// ══════════════════════════════════════════════════════════
+#mobile-misses {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 5;
+    gap: 6px;
+    align-items: center;
+    pointer-events: none;
+
+    .mobile-miss-drop {
+        width: 24px;
+        height: 20px;
+        object-fit: contain;
+        opacity: 0.2;
+        filter: grayscale(1) brightness(0.7);
+        transition: opacity 0.3s ease, filter 0.3s ease;
+
+        &.filled {
+            opacity: 1;
+            filter: none;
+        }
+    }
+
+    @media (min-width: $breakpoint-desktop) {
+        display: none;
+    }
+}
 
 #game-sidebar {
-  display: none;
+    display: none;
 
-  @media (min-width: $breakpoint-desktop) {
-    width: 210px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+    @media (min-width: $breakpoint-desktop) {
+        width: 210px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
 }
 
-// All sidebar inner styles are desktop-only
 @media (min-width: $breakpoint-desktop) {
-  .sidebar-brand {
-    display: block;
-    width: 150px;
-    height: auto;
-    margin: 4px auto 2px;
-  }
-
-  .sidebar-card {
-    background: rgba(255, 245, 250, 0.92);
-    border: 1.5px solid #fad7e8;
-    border-radius: $radius-md;
-    padding: 12px 16px;
-  }
-
-  .sidebar-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: $color-text-muted;
-    margin-bottom: 6px;
-  }
-
-  .sidebar-big {
-    font-size: 2.6rem;
-    font-weight: 900;
-    color: $color-text;
-    line-height: 1;
-  }
-
-  .sidebar-level-name {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: $color-accent;
-    margin-bottom: 10px;
-  }
-
-  .sidebar-fill-numbers {
-    font-size: 11px;
-    font-weight: 700;
-    color: $color-text-muted;
-    margin-top: 8px;
-  }
-
-  #level-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .level-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    &-fill {
-      display: block;
-      height: 8px;
-      border-radius: 4px;
-      background: rgba(240, 100, 160, 0.15);
-      border: 1.5px solid rgba(240, 100, 160, 0.2);
-      transition: background 0.3s ease, border-color 0.3s ease;
+    .sidebar-brand {
+        display: block;
+        width: 160px;
+        height: auto;
+        margin: 4px auto 2px;
     }
 
-    &-tag {
-      font-size: 10px;
-      font-weight: 700;
-      color: $color-text-muted;
-      white-space: nowrap;
+    .sidebar-card {
+        background: rgba(244, 251, 255, 0.92);
+        border: 1.5px solid #c7e3f7;
+        border-radius: $radius-md;
+        padding: 12px 16px;
     }
 
-    &[data-level="0"] .level-bar-fill { width: 100%; }
-    &[data-level="1"] .level-bar-fill { width: 79%;  }
-    &[data-level="2"] .level-bar-fill { width: 57%;  }
-    &[data-level="3"] .level-bar-fill { width: 39%;  }
-
-    &.active {
-      .level-bar-fill {
-        background: $color-accent;
-        border-color: $color-accent-hover;
-      }
-      .level-bar-tag { color: $color-accent-hover; }
+    .sidebar-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: $color-text-muted;
+        margin-bottom: 6px;
     }
 
-    &.passed .level-bar-fill {
-      background: rgba(240, 100, 160, 0.35);
-      border-color: rgba(240, 100, 160, 0.4);
+    .sidebar-big {
+        font-size: 2.6rem;
+        font-weight: 900;
+        color: $color-text;
+        line-height: 1;
     }
-  }
 
-  #misses-display {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-
-  .miss-drop {
-    width: 24px;
-    height: 28px;
-    object-fit: contain;
-    opacity: 0.18;
-    filter: grayscale(1) brightness(0.7);
-    transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
-
-    &.filled {
-      opacity: 1;
-      filter: none;
-      animation: dropBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5) both;
+    .sidebar-level-name {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $color-accent;
+        margin-bottom: 10px;
     }
-  }
 
-  .sidebar-controls { margin-top: auto; }
+    .sidebar-fill-numbers {
+        font-size: 11px;
+        font-weight: 700;
+        color: $color-text-muted;
+        margin-top: 8px;
+    }
 
-  .controls-line {
-    font-size: 12px;
-    font-weight: 700;
-    color: $color-text-muted;
-    line-height: 1.8;
-  }
+    #level-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .level-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &-fill {
+            display: block;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(83, 169, 255, 0.14);
+            border: 1.5px solid rgba(83, 169, 255, 0.22);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        &-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: $color-text-muted;
+            white-space: nowrap;
+        }
+
+        &[data-level="0"] .level-bar-fill { width: 100%; }
+        &[data-level="1"] .level-bar-fill { width: 79%; }
+        &[data-level="2"] .level-bar-fill { width: 57%; }
+        &[data-level="3"] .level-bar-fill { width: 39%; }
+
+        &.active {
+            .level-bar-fill {
+                background: $color-accent;
+                border-color: $color-accent-hover;
+            }
+
+            .level-bar-tag {
+                color: $color-accent-hover;
+            }
+        }
+
+        &.passed .level-bar-fill {
+            background: rgba(83, 169, 255, 0.35);
+            border-color: rgba(83, 169, 255, 0.45);
+        }
+    }
+
+    #misses-display {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .miss-drop {
+        width: 30px;
+        height: 24px;
+        object-fit: contain;
+        opacity: 0.18;
+        filter: grayscale(1) brightness(0.7);
+        transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+
+        &.filled {
+            opacity: 1;
+            filter: none;
+            animation: dropBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.5) both;
+        }
+    }
+
+    .sidebar-controls { margin-top: auto; }
+
+    .controls-line {
+        font-size: 12px;
+        font-weight: 700;
+        color: $color-text-muted;
+        line-height: 1.8;
+    }
 }
 
 @keyframes dropBounce {
-  0%   { transform: scale(0.5) translateY(-6px); }
-  70%  { transform: scale(1.15) translateY(2px);  }
-  100% { transform: scale(1)    translateY(0);    }
+    0% { transform: scale(0.5) translateY(-6px); }
+    70% { transform: scale(1.15) translateY(2px); }
+    100% { transform: scale(1) translateY(0); }
 }

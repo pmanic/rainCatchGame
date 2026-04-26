@@ -1,25 +1,23 @@
-// physicsSystem.js — Integrates velocity into position for all moving entities.
-
-import { query }           from '../ecs/query.js';
 import { updateComponent } from '../ecs/world.js';
 
 /**
- * Advances every entity that has both a Position and a Velocity component
- * by one time step, using simple Euler integration.
+ * Moves every entity that has both Position and Velocity components.
  *
  * @param {import('../ecs/world.js').World} world
- * @param {number} dt - Delta time in seconds.
+ * @param {number} dt
  * @returns {import('../ecs/world.js').World}
  */
 export function physicsSystem(world, dt) {
-  const movingEntities = query(world, 'Position', 'Velocity');
+    const movingEntities = [...world.components.Position.keys()]
+        .filter(entityId => world.components.Velocity.has(entityId));
 
-  return movingEntities.reduce((accWorld, entityId) => {
-    const { x, y }   = accWorld.components.Position.get(entityId);
-    const { vx, vy } = accWorld.components.Velocity.get(entityId);
-    return updateComponent(accWorld, 'Position', entityId, {
-      x: x + vx * dt,
-      y: y + vy * dt,
-    });
-  }, world);
+    return movingEntities.reduce((currentWorld, entityId) => {
+        const { x, y } = currentWorld.components.Position.get(entityId);
+        const { vx, vy } = currentWorld.components.Velocity.get(entityId);
+
+        return updateComponent(currentWorld, 'Position', entityId, {
+            x: x + vx * dt,
+            y: y + vy * dt,
+        });
+    }, world);
 }
