@@ -1,61 +1,61 @@
 # rainCatcher
 
-Jednostavna ECS igrica u JavaScript-u. Igrac pomera kantu i hvata kapi kise, izbegava blato i skuplja zlatne kapi za povratak zivota.
+A simple ECS game written in JavaScript. The player moves a bucket, catches raindrops, avoids mud, and collects golden drops to recover lives.
 
-## Sta projekat pokazuje
+## What the project demonstrates
 
-- ECS engine napravljen u JavaScript-u
-- Funkcionalni stil: nema mutacije sveta, sistemi vracaju novi `world`
-- Kompozicija sistema preko `runSystems(...)`
-- Upotreba `map`, `filter` i `reduce`
-- Obavezni sistemi sa zadatka i jos nekoliko dodatnih sistema za samu igricu
+- An ECS engine built in JavaScript
+- Functional style: no world mutation, systems return a new `world`
+- System composition through `runSystems(...)`
+- Use of `map`, `filter`, and `reduce`
+- The required systems from the assignment plus several additional game-specific systems
 
-## Sistemi u projektu
+## Systems in the project
 
 - `inputSystem`:
-  tastatura, mis, touch i tekstualni unos imena igraca
+  keyboard, mouse, touch, and player name text input
 - `renderSystem`:
-  iscrtavanje pozadine, objekata i kante
+  drawing the background, objects, and bucket
 - `playerSystem`:
-  pomeranje igraca
+  player movement
 - `spawnSystem`:
-  kreiranje novih objekata
+  creation of new falling objects
 - `physicsSystem`:
-  padanje objekata
+  falling object movement
 - `collisionSystem`:
-  detekcija sudara
+  collision detection
 - `cleanupSystem`:
-  uklanjanje objekata koji su ispali sa ekrana
+  removing objects that leave the screen
 - `progressionSystem`:
-  skor, zivoti, nivo kante i kraj igre
+  score, lives, bucket level, and game over logic
 
-## Funkcionalni principi
+## Functional programming principles
 
-- Imutabilnost:
-  svaka promena vraca novi objekat sveta ili novu mapu komponenti
-- Funkcije viseg reda:
-  `inputSystem(rawInput)` vraca sistem, `reduce` pokrece listu sistema
-- Kompozicija funkcija:
-  svi sistemi se izvrsavaju redom u jednoj petlji
+- Immutability:
+  every change returns a new world object or a new component map
+- Higher-order functions:
+  `inputSystem(rawInput)` returns a system, and `reduce` executes the system list
+- Function composition:
+  all systems are executed in sequence inside a single loop
 - `filter`:
-  biranje entiteta koji imaju trazene komponente
+  selecting entities that have the required components
 - `reduce`:
-  pomeranje vise entiteta, obrada dogadjaja i pokretanje svih sistema
+  moving multiple entities, processing events, and running all systems
 
-## Pravila igre
+## Game rules
 
-- Kisna kap: `+1` poen i puni vodostaj
-- Blatnjava kap: `-1` poen i smanjuje vodostaj
-- Zlatna kap: vraca jedan izgubljeni oblak
-- Kada se kanta napuni, prelazi u manju velicinu:
+- Raindrop: `+1` point and fills the water gauge
+- Mud drop: `-1` point and lowers the water gauge
+- Golden drop: restores one lost cloud
+- When the bucket fills up, it changes to a smaller size:
   Barrel -> Bucket -> Pail -> Tin
-- Ako promasis 3 kisne kapi ili skor padne na 0, igra se zavrsava
+- If you miss 3 raindrops or the score drops to 0, the game ends
 
-## Pokretanje
+## Running the project
 
 ```bash
 npm install
 npm run build:css
 ```
 
-Posle toga otvoriti `index.html` u browser-u.
+After that, open `index.html` in a browser.
